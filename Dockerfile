@@ -20,6 +20,7 @@ USER pbraun
 RUN git config --global user.name "Peter Braun" && git config --global user.email "pbraun@redhat.com" && export USER=pbraun
 
 WORKDIR /home/pbraun
+ADD ./productization_playbooks /home/pbraun/productization_playbooks
 RUN git clone https://code.engineering.redhat.com/gerrit/jboss-mobile/mobile-platform-tooling && (cd mobile-platform-tooling && curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://code.engineering.redhat.com/gerrit/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)
 
 
