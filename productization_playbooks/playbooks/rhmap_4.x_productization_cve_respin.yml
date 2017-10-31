@@ -27,4 +27,4 @@
 
 
   vars:
-    - username: "dkirwan"
+    - ssh_user: "dkirwan"
