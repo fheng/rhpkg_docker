@@ -1,4 +1,4 @@
-- hosts: 127.0.0.1
+- hosts: localhost
   become: False
   vars_prompt:
     - name: "added_to_gerrit"
@@ -27,4 +27,4 @@
 
 
   vars:
-    - ssh_user: "dkirwan"
+    - git_user: "dkirwan"
