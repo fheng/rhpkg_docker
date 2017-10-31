@@ -4,7 +4,7 @@ You need to have a directory with a keytab file and mount it to the container li
 
 ```
 docker build -t rhpkg:latest .
-docker run -v <full path to keytab file>:/mnt/keytabs -it rhpkg /bin/bash
+docker run -v <full path to keytab folder>:/mnt/keytabs -it rhpkg /bin/bash
 ```
 
 The name of the keytab file needs to be `rhmap4-build.keytab`

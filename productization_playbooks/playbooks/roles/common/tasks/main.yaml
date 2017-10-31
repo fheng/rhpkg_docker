@@ -1,0 +1,14 @@
+---
+- name: "Set USER_HOME env var facts"
+  set_fact:
+    USER_HOME: "{{ lookup('env','HOME') }}"
+  tags:
+    - always
+
+- debug:
+    msg:
+      - 'Error in env; HOME env variable does not exist.  Please set!'
+  when: not USER_HOME
+  failed_when: not USER_HOME
+  tags:
+    - always
