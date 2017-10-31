@@ -1,0 +1,30 @@
+- hosts: 127.0.0.1
+  become: False
+  vars_prompt:
+    - name: "added_to_gerrit"
+      prompt: "Have you added your key to the Engineering Gerrit? See: https://code.engineering.redhat.com/gerrit/#/settings/ssh-keys"
+      private: false
+      default: 'N'
+
+  tasks:
+    - name: "Set USER_HOME env var facts"
+      include_role:
+        name: common
+        tasks_from: main
+
+    - fail: msg="Please add your key to gerrit and rerun the playbook"
+      when: added_to_gerrit == "N"
+
+    - name: "Set USER_HOME env var facts"
+      include_role:
+        name: rhmap_productization
+        tasks_from: create_productization_directory_structure
+
+    - name: "Set USER_HOME env var facts"
+      include_role:
+        name: rhmap_productization
+        tasks_from: clone_productization_repos
+
+
+  vars:
+    - ssh_user: "dkirwan"
