@@ -1,3 +1,2 @@
 ---
-vars:
-  - username: "rhmap-{{ hostvars['localhost']['ssh_user'] }}"
+username: "{{ git_user }}"

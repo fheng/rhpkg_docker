@@ -146,5 +146,6 @@
 
 - name: "fh-core-openshift-templates"
   git:
-    repo: "ssh://{{username}}@code.engineering.redhat.com/jboss-mobile/fh-core-openshift-templates"
+    repo: "git+ssh://{{username}}@code.engineering.redhat.com/fh-core-openshift-templates.git"
     dest: "{{USER_HOME}}/Productization/_Product_builds/code-engineering/_Node_JS/fh-core-openshift-templates"
+
