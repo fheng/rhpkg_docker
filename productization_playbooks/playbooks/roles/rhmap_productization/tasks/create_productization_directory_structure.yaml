@@ -1,18 +1,10 @@
 ---
 - name: "Create docker directory"
   file:
-    path: '{{ USER_HOME }}/Productization/_Product_builds/code-engineering/docker/upstream'
+    path: "{{ USER_HOME }}/Productization/_Product_builds/code-engineering/{{ item }}"
     state: directory
     mode: 0755
-
-- name: "Create rpm directory"
-  file:
-    path: '{{ USER_HOME }}/Productization/_Product_builds/code-engineering/rpm'
-    state: directory
-    mode: 0755
-
-- name: "Create _Node_JS directory"
-  file:
-    path: '{{ USER_HOME }}/Productization/_Product_builds/code-engineering/_Node_JS'
-    state: directory
-    mode: 0755
+  with_items:
+    - "docker/upstream"
+    - "rpm"
+    - "_Node_JS"
