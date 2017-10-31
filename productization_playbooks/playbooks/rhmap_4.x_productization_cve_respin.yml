@@ -27,4 +27,4 @@
 
 
   vars:
-    - git_user: "dkirwan"
+    - git_user: "rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com"

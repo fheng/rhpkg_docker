@@ -8,19 +8,24 @@ ADD ./krb5.conf /etc/
 
 RUN curl -Lk https://password.corp.redhat.com/cacert.crt -o /etc/pki/ca-trust/source/anchors/Red_Hat_IS_CA.crt && curl -Lk https://password.corp.redhat.com/RH-IT-Root-CA.crt -o /etc/pki/ca-trust/source/anchors/Red_Hat_IT_Root_CA.crt && curl -Lk https://engineering.redhat.com/Eng-CA.crt -o /etc/pki/ca-trust/source/anchors/Eng_Ops_CA.crt && curl -Lk https://password.corp.redhat.com/pki-ca-chain.crt -o /etc/pki/ca-trust/source/anchors/PKI_CA_Chain.crt && ln -sf /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem /etc/pki/tls/certs/ca-bundle.crt && update-ca-trust && update-ca-trust enable
 
-RUN useradd -d /home/pbraun -g wheel -ms /bin/bash pbraun
-RUN mkdir -p /mnt/keytabs && mkdir -p /home/pbraun/.ssh
-VOLUME ["/mnt/keytabs", "/home/pbraun/.ssh"]
-RUN ls -la /home/pbraun/.ssh
+RUN useradd -d /home/rhmap4-build -g wheel -ms /bin/bash rhmap4-build
 
-# RUN kinit -kt /mnt/keytabs/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM && klist
+ADD ./rhmap4-build-priv /home/rhmap4-build/.ssh/id_rsa
+ADD ./rhmap4-build-pub /home/rhmap4-build/.ssh/id_rsa.pub
+ADD ./ssh-config /home/rhmap4-build/.ssh/config
+RUN chown rhmap4-build /home/rhmap4-build/.ssh/id_rsa* && chmod 0600 /home/rhmap4-build/.ssh/id_rsa*
 
-RUN echo "1234" | passwd pbraun --stdin
-USER pbraun
-RUN git config --global user.name "Peter Braun" && git config --global user.email "pbraun@redhat.com" && export USER=pbraun
+RUN mkdir -p /mnt/keytabs && mkdir -p /home/rhmap4-build/.ssh
+VOLUME ["/mnt/keytabs"]
 
-WORKDIR /home/pbraun
-ADD ./productization_playbooks /home/pbraun/productization_playbooks
-RUN git clone https://code.engineering.redhat.com/gerrit/jboss-mobile/mobile-platform-tooling && (cd mobile-platform-tooling && curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://code.engineering.redhat.com/gerrit/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)
+RUN echo "1234" | passwd rhmap4-build --stdin
+USER rhmap4-build
+ENV RHUSER rhmap4-build
+ENV USER rhmap4-build
+RUN git config --global user.name "Peter Braun" && git config --global user.email "pbraun@redhat.com" && export USER=rhmap4-build
 
+WORKDIR /home/rhmap4-build
 
+# RUN git clone https://code.engineering.redhat.com/gerrit/jboss-mobile/mobile-platform-tooling && (cd mobile-platform-tooling && curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://code.engineering.redhat.com/gerrit/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)
+
+ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks

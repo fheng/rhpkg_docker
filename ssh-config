@@ -1,0 +1,6 @@
+Host pkgs.devel.redhat.com
+  GSSAPIAuthentication yes
+  GSSAPIDelegateCredentials yes
+Host code.engineering.redhat.com
+  User rhmap4-build
+  IdentityFile ~/.ssh/id_rsa
