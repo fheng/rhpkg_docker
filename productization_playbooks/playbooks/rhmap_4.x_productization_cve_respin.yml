@@ -11,16 +11,14 @@
       command: ansible-vault decrypt /home/rhmap4-build/rhmap4-build.keytab /home/rhmap4-build/.ssh/id_rsa /home/rhmap4-build/.ssh/id_rsa.pub --vault-password-file /home/rhmap4-build/.password
 
     - file:
-      path: /home/rhmap4-build/.ssh/id_rsa
-      owner: rhmap4-build
-      group: root
-      mode: 0600
+        path: /home/rhmap4-build/.ssh/id_rsa
+        owner: rhmap4-build
+        mode: 0600
 
     - file:
-      path: /home/rhmap4-build/.ssh/id_rsa.pub
-      owner: rhmap4-build
-      group: root
-      mode: 0600
+        path: /home/rhmap4-build/.ssh/id_rsa.pub
+        owner: rhmap4-build
+        mode: 0600
 
     - name: "Execute kinit"
       command: kinit -kt /home/rhmap4-build/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM

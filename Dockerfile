@@ -18,9 +18,7 @@ ADD ./rhmap4-build.keytab /home/rhmap4-build/rhmap4-build.keytab
 ADD ./.password /home/rhmap4-build/.password
 ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks
 
-# RUN chown rhmap4-build /home/rhmap4-build/.ssh/id_rsa* && chmod 0600 /home/rhmap4-build/.ssh/id_rsa* && chown rhmap4-build /home/rhmap4-build/.ssh/known_hosts && chown rhmap4-build /home/rhmap4-build/productization_playbooks
-
-RUN mkdir -p /home/rhmap4-build/.ssh
+RUN chown -R rhmap4-build /home/rhmap4-build/.ssh && chown rhmap4-build /home/rhmap4-build/productization_playbooks
 
 RUN echo "1234" | passwd rhmap4-build --stdin
 USER rhmap4-build
