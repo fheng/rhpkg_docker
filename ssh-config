@@ -1,0 +1,17 @@
+Host pkgs.devel.redhat.com
+  Port 22
+  GSSAPIAuthentication yes
+  GSSAPIDelegateCredentials yes
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
+Host code.engineering.redhat.com
+  Port 22
+  IdentityFile ~/.ssh/id_rsa
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
+Host github.com
+  IdentityFile ~/.ssh/id_rsa
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
