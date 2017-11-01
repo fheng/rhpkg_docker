@@ -15,6 +15,9 @@
     - fail: msg="Please add your key to gerrit and rerun the playbook"
       when: added_to_gerrit == "N"
 
+    - name: Run the command if the specified file does not exist.
+      command: kinit -kt /mnt/keytabs/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM
+
     - name: "Set USER_HOME env var facts"
       include_role:
         name: rhmap_productization
