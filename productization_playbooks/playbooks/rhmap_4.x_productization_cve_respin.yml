@@ -1,10 +1,11 @@
 - hosts: localhost
   become: False
-  vars_prompt:
-    - name: "added_to_gerrit"
-      prompt: "Have you added your key to the Engineering Gerrit? See: https://code.engineering.redhat.com/gerrit/#/settings/ssh-keys"
-      private: false
-      default: 'N'
+
+#  vars_prompt:
+#    - name: "added_to_gerrit"
+#      prompt: "Have you added your key to the Engineering Gerrit? See: https://code.engineering.redhat.com/gerrit/#/settings/ssh-keys"
+#      private: false
+#      default: 'N'
 
   tasks:
     - name: "Set USER_HOME env var facts"
@@ -12,11 +13,14 @@
         name: common
         tasks_from: main
 
-    - fail: msg="Please add your key to gerrit and rerun the playbook"
-      when: added_to_gerrit == "N"
+#    - fail: msg="Please add your key to gerrit and rerun the playbook"
+#      when: added_to_gerrit == "N"
 
-    - name: Run the command if the specified file does not exist.
-      command: kinit -kt /mnt/keytabs/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM
+    - name: "Decrypt the ansible-vault encrypted files"
+      command: ansible-vault decrypt /home/rhmap4-build/rhmap4-build.keytab /home/rhmap4-build/rhmap4-build-priv /home/rhmap4-build/rhmap4-build-pub
+
+    - name: "Execute kinit"
+      command: kinit -kt /home/rhmap4-build/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM
 
     - name: "Set USER_HOME env var facts"
       include_role:
