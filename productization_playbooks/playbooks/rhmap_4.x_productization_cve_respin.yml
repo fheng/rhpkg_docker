@@ -13,11 +13,8 @@
         name: common
         tasks_from: main
 
-#    - fail: msg="Please add your key to gerrit and rerun the playbook"
-#      when: added_to_gerrit == "N"
-
     - name: "Decrypt the ansible-vault encrypted files"
-      command: ansible-vault decrypt /home/rhmap4-build/rhmap4-build.keytab /home/rhmap4-build/rhmap4-build-priv /home/rhmap4-build/rhmap4-build-pub
+      command: ansible-vault decrypt /home/rhmap4-build/rhmap4-build.keytab /home/rhmap4-build/.ssh/id_rsa /home/rhmap4-build/.ssh/id_rsa.pub --vault-password-file /home/rhmap4-build/.password
 
     - name: "Execute kinit"
       command: kinit -kt /home/rhmap4-build/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM
