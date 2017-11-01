@@ -1,5 +1,5 @@
 ---
-- name: Clone "{{ item.name }} repository into {{ item.dest }}"
+- name: "Clone repository"
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
