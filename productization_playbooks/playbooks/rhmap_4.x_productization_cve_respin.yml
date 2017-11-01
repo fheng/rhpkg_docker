@@ -1,12 +1,6 @@
 - hosts: localhost
   become: False
 
-#  vars_prompt:
-#    - name: "added_to_gerrit"
-#      prompt: "Have you added your key to the Engineering Gerrit? See: https://code.engineering.redhat.com/gerrit/#/settings/ssh-keys"
-#      private: false
-#      default: 'N'
-
   tasks:
     - name: "Set USER_HOME env var facts"
       include_role:
@@ -15,6 +9,18 @@
 
     - name: "Decrypt the ansible-vault encrypted files"
       command: ansible-vault decrypt /home/rhmap4-build/rhmap4-build.keytab /home/rhmap4-build/.ssh/id_rsa /home/rhmap4-build/.ssh/id_rsa.pub --vault-password-file /home/rhmap4-build/.password
+
+    - file:
+      path: /home/rhmap4-build/.ssh/id_rsa
+      owner: rhmap4-build
+      group: root
+      mode: 0600
+
+    - file:
+      path: /home/rhmap4-build/.ssh/id_rsa.pub
+      owner: rhmap4-build
+      group: root
+      mode: 0600
 
     - name: "Execute kinit"
       command: kinit -kt /home/rhmap4-build/rhmap4-build.keytab rhmap4-build/mobile-jenkins.rhev-ci-vms.eng.rdu2.redhat.com@REDHAT.COM
