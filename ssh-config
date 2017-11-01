@@ -4,3 +4,6 @@ Host pkgs.devel.redhat.com
 Host code.engineering.redhat.com
   User rhmap4-build
   IdentityFile ~/.ssh/id_rsa
+Host
+  User git
+  IdentityFile ~/.ssh/id_rsa

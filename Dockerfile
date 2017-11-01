@@ -13,7 +13,9 @@ RUN useradd -d /home/rhmap4-build -g wheel -ms /bin/bash rhmap4-build
 ADD ./rhmap4-build-priv /home/rhmap4-build/.ssh/id_rsa
 ADD ./rhmap4-build-pub /home/rhmap4-build/.ssh/id_rsa.pub
 ADD ./ssh-config /home/rhmap4-build/.ssh/config
-RUN chown rhmap4-build /home/rhmap4-build/.ssh/id_rsa* && chmod 0600 /home/rhmap4-build/.ssh/id_rsa*
+ADD ./known_hosts /home/rhmap4-build/.ssh/known_hosts
+ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks
+RUN chown rhmap4-build /home/rhmap4-build/.ssh/id_rsa* && chmod 0600 /home/rhmap4-build/.ssh/id_rsa* && chown rhmap4-build /home/rhmap4-build/.ssh/known_hosts && chown rhmap4-build /home/rhmap4-build/productization_playbooks
 
 RUN mkdir -p /mnt/keytabs && mkdir -p /home/rhmap4-build/.ssh
 VOLUME ["/mnt/keytabs"]
@@ -28,4 +30,3 @@ WORKDIR /home/rhmap4-build
 
 # RUN git clone https://code.engineering.redhat.com/gerrit/jboss-mobile/mobile-platform-tooling && (cd mobile-platform-tooling && curl -kLo `git rev-parse --git-dir`/hooks/commit-msg https://code.engineering.redhat.com/gerrit/tools/hooks/commit-msg; chmod +x `git rev-parse --git-dir`/hooks/commit-msg)
 
-ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks
