@@ -23,7 +23,7 @@ RUN echo "1234" | passwd rhmap4-build --stdin
 USER rhmap4-build
 ENV RHUSER rhmap4-build
 ENV USER rhmap4-build
-RUN git config --global user.name "Peter Braun" && git config --global user.email "rhmap4-build@redhat.com" && export USER=rhmap4-build
+RUN git config --global user.name "rhmap4-build" && git config --global user.email "mobile-qe-team@redhat.com" && export USER=rhmap4-build
 
 WORKDIR /home/rhmap4-build
 ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks
