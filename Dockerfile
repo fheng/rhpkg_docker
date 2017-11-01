@@ -14,17 +14,19 @@ ADD ./rhmap4-build-priv /home/rhmap4-build/.ssh/id_rsa
 ADD ./rhmap4-build-pub /home/rhmap4-build/.ssh/id_rsa.pub
 ADD ./ssh-config /home/rhmap4-build/.ssh/config
 ADD ./known_hosts /home/rhmap4-build/.ssh/known_hosts
+ADD ./rhmap4-build.keytab /home/rhmap4.build/
 ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks
+
 RUN chown rhmap4-build /home/rhmap4-build/.ssh/id_rsa* && chmod 0600 /home/rhmap4-build/.ssh/id_rsa* && chown rhmap4-build /home/rhmap4-build/.ssh/known_hosts && chown rhmap4-build /home/rhmap4-build/productization_playbooks
 
-RUN mkdir -p /mnt/keytabs && mkdir -p /home/rhmap4-build/.ssh
-VOLUME ["/mnt/keytabs"]
+RUN mkdir -p /home/rhmap4-build/.ssh
 
 RUN echo "1234" | passwd rhmap4-build --stdin
 USER rhmap4-build
+
 ENV RHUSER rhmap4-build
 ENV USER rhmap4-build
 
-RUN git config --global user.name "rhmap4-build" && git config --global user.email "mobile-qe-team@redhat.com" && export USER=rhmap4-build
+RUN git config --global user.name "rhmap4-build" && git config --global user.email "mobile-qe-team@redhat.com"
 
 WORKDIR /home/rhmap4-build
