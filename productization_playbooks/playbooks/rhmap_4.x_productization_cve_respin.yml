@@ -10,12 +10,20 @@
     - name: "Decrypt the ansible-vault encrypted files"
       command: ansible-vault decrypt /home/rhmap4-build/rhmap4-build.keytab /home/rhmap4-build/.ssh/id_rsa /home/rhmap4-build/.ssh/id_rsa.pub --vault-password-file /home/rhmap4-build/.password
 
-    - file:
+    - name: "Set permisssions on ssh config"
+      file:
+        path: /home/rhmap4-build/.ssh/config
+        owner: rhmap4-build
+        mode: 0600
+
+    - name: "Set permisssions on private key"
+      file:
         path: /home/rhmap4-build/.ssh/id_rsa
         owner: rhmap4-build
         mode: 0600
 
-    - file:
+    - name: "Set permissions on public key"
+      file:
         path: /home/rhmap4-build/.ssh/id_rsa.pub
         owner: rhmap4-build
         mode: 0600
