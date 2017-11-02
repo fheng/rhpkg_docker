@@ -32,6 +32,7 @@ USER rhmap4-build
 
 ENV RHUSER rhmap4-build
 ENV USER rhmap4-build
+ENV RHMAP4_PEM /home/rhmap4-build/.ssh/id_rsa
 
 
 # Required git config
