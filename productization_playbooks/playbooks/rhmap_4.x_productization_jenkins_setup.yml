@@ -1,0 +1,22 @@
+- hosts: localhost
+  become: False
+
+  tasks:
+    - name: "Set USER_HOME env var facts"
+      include_role:
+        name: common
+        tasks_from: main
+
+    - name: "Set USER_HOME env var facts"
+      include_role:
+        name: rhmap_productization
+        tasks_from: create_productization_directory_structure
+
+    - name: "Set USER_HOME env var facts"
+      include_role:
+        name: rhmap_productization
+        tasks_from: clone_productization_repos
+
+
+  vars:
+    - git_user: "rhmap4-build"
