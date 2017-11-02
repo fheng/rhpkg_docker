@@ -1,15 +1,20 @@
 FROM fedora:25
 
-RUN curl -Lk -o /etc/yum.repos.d/rcm-tools-fedora.repo  http://download.devel.redhat.com/rel-eng/RCMTOOLS/rcm-tools-fedora.repo 
+# Install the rpm repositories and required packages
 
+RUN curl -Lk -o /etc/yum.repos.d/rcm-tools-fedora.repo  http://download.devel.redhat.com/rel-eng/RCMTOOLS/rcm-tools-fedora.repo
 RUN dnf update -y && dnf install sudo -y && dnf install ansible -y && dnf install python2-simplejson -y && dnf install python2-lxml -y && dnf install npm -y && dnf install krb5-workstation -y && dnf install rhpkg -y && dnf clean all -y
 
-ADD ./krb5.conf /etc/
 
+# Set up kerberos config and set up certificates
+
+ADD ./krb5.conf /etc/
 RUN curl -Lk https://password.corp.redhat.com/cacert.crt -o /etc/pki/ca-trust/source/anchors/Red_Hat_IS_CA.crt && curl -Lk https://password.corp.redhat.com/RH-IT-Root-CA.crt -o /etc/pki/ca-trust/source/anchors/Red_Hat_IT_Root_CA.crt && curl -Lk https://engineering.redhat.com/Eng-CA.crt -o /etc/pki/ca-trust/source/anchors/Eng_Ops_CA.crt && curl -Lk https://password.corp.redhat.com/pki-ca-chain.crt -o /etc/pki/ca-trust/source/anchors/PKI_CA_Chain.crt && ln -sf /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem /etc/pki/tls/certs/ca-bundle.crt && update-ca-trust && update-ca-trust enable
 
-RUN useradd -d /home/rhmap4-build -g wheel -ms /bin/bash rhmap4-build
 
+# Create and set up the user account
+
+RUN useradd -d /home/rhmap4-build -g wheel -ms /bin/bash rhmap4-build
 ADD ./rhmap4-build-priv /home/rhmap4-build/.ssh/id_rsa
 ADD ./rhmap4-build-pub /home/rhmap4-build/.ssh/id_rsa.pub
 ADD ./ssh-config /home/rhmap4-build/.ssh/config
@@ -28,6 +33,8 @@ USER rhmap4-build
 ENV RHUSER rhmap4-build
 ENV USER rhmap4-build
 
-RUN git config --global user.name "rhmap4-build" && git config --global user.email "mobile-qe-team@redhat.com"
 
+# Required git config
+
+RUN git config --global user.name "rhmap4-build" && git config --global user.email "mobile-qe-team@redhat.com"
 WORKDIR /home/rhmap4-build
