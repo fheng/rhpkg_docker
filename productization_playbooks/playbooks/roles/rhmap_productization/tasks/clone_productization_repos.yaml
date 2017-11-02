@@ -3,6 +3,7 @@
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
+    key_file: "{{ lookup('env', 'RHMAP4_PEM') }}" 
   with_items:
     "{{ rhmap_fh_repos }}"
 
