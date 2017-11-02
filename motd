@@ -14,7 +14,7 @@
  `---'      '---'       '---'                            `---`     
 
 Welcome to the RHMAP productization bootstrap environment
-Documentation can be found at https://github.com/fheng/help
+Documentation can be found at https://github.com/fheng/help/productization
 Run ./bootstrap.sh to prepare the environment
 Happy productization!
 
