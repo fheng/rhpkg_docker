@@ -16,9 +16,11 @@ ADD ./ssh-config /home/rhmap4-build/.ssh/config
 ADD ./known_hosts /home/rhmap4-build/.ssh/known_hosts
 ADD ./rhmap4-build.keytab /home/rhmap4-build/rhmap4-build.keytab
 ADD ./.password /home/rhmap4-build/.password
+ADD ./motd /etc/motd
+ADD ./bootstrap.sh /home/rhmap4-build/bootstrap.sh
 ADD ./productization_playbooks /home/rhmap4-build/productization_playbooks
 
-RUN chown -R rhmap4-build /home/rhmap4-build/.ssh && chown rhmap4-build /home/rhmap4-build/productization_playbooks
+RUN chown -R rhmap4-build /home/rhmap4-build/.ssh && chown rhmap4-build /home/rhmap4-build/productization_playbooks && echo "alias vim='vi'" >> /home/rhmap4-build/.bashrc && echo "cat /etc/motd" >> /home/rhmap4-build/.bashrc && chmod +x /home/rhmap4-build/bootstrap.sh
 
 RUN echo "1234" | passwd rhmap4-build --stdin
 USER rhmap4-build
